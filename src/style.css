@@ -1,1 +1,29 @@
 @import url(https://cdn.jsdelivr.net/npm/modern-normalize@3.0.1/modern-normalize.min.css);
+
+body {
+    display: grid;
+    grid-template-areas: "sidebar main main main main";
+    height: 100dvh;
+}
+
+nav {
+    grid-area: sidebar;
+    width: 100%;
+    height: 100%;
+}
+
+main {
+    grid-area: main;
+}
+
+div.sidebar {
+    background-color: rgb(41, 41, 41);
+    width: 100%;
+    height: 100%;
+}
+
+div.main-content {
+    background-color: rgb(27, 27, 27);
+    height: 100%;
+    width: 100%;
+}
