@@ -18,3 +18,15 @@ class Project {
         return false;
     }
 }
+
+class ProjectManager {
+    static defaultProject = new Project("Default Project");
+    static projects = [ProjectManager.defaultProject];
+
+    static addProject(projectName) {
+        this.projects.push(new Project(projectName));
+    }
+
+}
+
+export { Project, ProjectManager};

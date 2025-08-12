@@ -53,3 +53,5 @@ class Task {
         this.complete = !this.complete;
     }
 }
+
+export { Task };
