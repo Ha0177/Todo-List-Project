@@ -44,7 +44,7 @@ div.sidebar img {
     height: 35px;
 }
 
-div.sidebar h2.projects {
+div.sidebar button.add-project-btn {
     grid-column: 1 / span 2;
     margin-top: 15em;
 }

@@ -10,9 +10,21 @@
         <div class="sidebar">
             <img src="list.svg" alt=""><h1 class="logo">ToDoList</h1>
             <img src="user.svg" alt=""><h3 class="profile">Me</h2>
-            <button class="add-task-btn"><img src="plus-circle.svg" alt="">Add task</button>
-            <h2 class="projects">My Projects</h2>   
+            <button class="add-task-btn">
+                <img src="plus-circle.svg" alt="">Add task
+            </button>
+            <button class="add-project-btn">
+                <img src="plus-circle.svg" alt="">My Projects
+            </button>   
             <div class="projects-container">aaa</div>
+
+            <dialog id="add-project-dialog">
+                <form id="add-project-form">
+                    <input type="text" id="project-name" placeholder="Project Name" required>
+                    <button type="submit" id="project-form-add-btn">Add</button>
+                    <button type="button" id="project-form-cancel-btn">Cancel</button>
+                </form>
+            </dialog>
             
         </div>
     </nav>

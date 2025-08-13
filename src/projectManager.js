@@ -29,4 +29,4 @@ class ProjectManager {
 
 }
 
-export { Project, ProjectManager};
+export { Project, ProjectManager };
