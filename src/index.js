@@ -1,4 +1,4 @@
 import "./style.css";
-import { Dom, renderDOM } from "./domManager.js";
+import { Dom, initDOM } from "./domManager.js";
 
-document.addEventListener('DOMContentLoaded', renderDOM);
+document.addEventListener('DOMContentLoaded', initDOM);
