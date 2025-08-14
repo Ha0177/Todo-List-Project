@@ -16,11 +16,26 @@
             <button class="add-project-btn">
                 <img src="plus-circle.svg" alt="">My Projects
             </button>   
-            <div class="projects-container">aaa</div>
+            <div class="projects-container"></div>
 
             <dialog id="add-project-dialog">
                 <form id="add-project-form">
-                    <input type="text" id="project-name" placeholder="Project Name" required>
+                    <h1>Add project</h1>
+                    <h2>Name</h2>
+                    <input type="text" id="project-name" minlength="1" maxlength="32">
+                    <h2>Color</h2>
+                    <div class="color-dropdown">
+                        <select id="project-color" class="color-select">
+                            <option value="#ff6b6b" data-color="#ff6b6b">Red</option>
+                            <option value="#4ecdc4" data-color="#4ecdc4">Teal</option>
+                            <option value="#45b7d1" data-color="#45b7d1">Blue</option>
+                            <option value="#96ceb4" data-color="#96ceb4">Green</option>
+                            <option value="#feca57" data-color="#feca57">Yellow</option>
+                            <option value="#ff9ff3" data-color="#ff9ff3">Pink</option>
+                            <option value="#54a0ff" data-color="#54a0ff">Light Blue</option>
+                            <option value="#5f27cd" data-color="#5f27cd">Purple</option>
+                        </select>
+                    </div>
                     <button type="submit" id="project-form-add-btn">Add</button>
                     <button type="button" id="project-form-cancel-btn">Cancel</button>
                 </form>
