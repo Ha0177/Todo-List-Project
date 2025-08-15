@@ -1,7 +1,11 @@
 import { Task } from "./taskManager.js";
 import { Project, ProjectManager } from "./projectManager.js";
-import hashIcon from "./hash.svg";
-
+import defaultProjectIcon from "./Project-icons/whiteProjectIcon.svg";
+import blueProjectIcon from "./Project-icons/blueProjectIcon.svg"
+import redProjectIcon from "./Project-icons/redProjectIcon.svg"
+import yellowProjectIcon from "./Project-icons/yellowProjectIcon.svg"
+import greenProjectIcon from "./Project-icons/greenProjectIcon.svg"
+import purpleProjectIcon from "./Project-icons/purpleProjectIcon.svg"
 class Dom {
     static selectElement(selector) {
         if (typeof selector === "string") {
@@ -29,6 +33,7 @@ class Dom {
 
     static createElement(elementName, options = {}) {
         
+        // EXAMPLE:
         // const myButton = Dom.createElement('button', {
         //     class: 'add-btn',
         //     textContent: 'Click Me'
@@ -75,14 +80,41 @@ function initDOM() {
     function renderProjects() {
         const projectsContainer = Dom.selectElement("div.projects-container")
         projectsContainer.textContent = "";
+
         ProjectManager.projects.forEach((project) => {
             const projectLink = Dom.createElement("a", {
                 class: "project-link"
             })
+
+            let selectedIconColor
+            switch (project.color) {
+                case "white":
+                    selectedIconColor = defaultProjectIcon;
+                     break;
+                case "red":
+                    selectedIconColor = redProjectIcon;
+                    break;
+                case "blue":
+                    selectedIconColor = blueProjectIcon;
+                    break;
+                case "green":
+                    selectedIconColor = greenProjectIcon;
+                    break;
+                case "yellow":
+                    selectedIconColor = yellowProjectIcon;
+                    break;
+                case "purple":
+                    selectedIconColor = purpleProjectIcon;
+                    break;
+                default:
+                    selectedIconColor = defaultProjectIcon;
+                    break;
+            }
+
             const projectLinkIcon = Dom.createElement("img", {
                 class: "project-link-icon",
                 attributes: {
-                    src: hashIcon
+                    src: selectedIconColor
                 }
             })
             const projectLinkName = Dom.createElement("span", {
@@ -115,15 +147,22 @@ function initDOM() {
      projectFormAddBtn.addEventListener("click", (e) => {
         e.preventDefault();
         const name = Dom.selectElement("input#project-name");
-        const color = Dom.selectElement("input#project-color")
+        const colorSelect = Dom.selectElement("#project-color");
+
+        if (ProjectManager.projects.length === 5) {
+            console.log("project limit reached");
+            return;
+        }
+        
         if (name.value !== "") {
-            ProjectManager.addProject(name.value, color.value);
+            ProjectManager.addProject(name.value, colorSelect.value);
         }
         addProjectForm.reset();
         addProjectDialog.close();
         renderProjects();
     });
 
+    
 
 }
 

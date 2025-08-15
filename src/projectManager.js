@@ -21,13 +21,15 @@ class Project {
 }
 
 class ProjectManager {
-    static defaultProject = new Project("Default Project");
+    static defaultProject = new Project("Default Project", "white");
     static projects = [ProjectManager.defaultProject];
 
-    static addProject(projectName) {
-        this.projects.push(new Project(projectName));
+    static addProject(projectName, color) {
+        this.projects.push(new Project(projectName, color));
     }
 
 }
+
+console.log(ProjectManager.projects)
 
 export { Project, ProjectManager };
