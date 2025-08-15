@@ -121,7 +121,10 @@ function initDOM() {
                 class: "project-link-name",
                 textContent: project.name,
             });
-            
+
+            const projectCounter = Dom.selectElement(".project-counter")
+            projectCounter.textContent = `(${ProjectManager.projects.length}/5)`;
+
             projectsContainer.appendChild(projectLink);
             projectLink.prepend(projectLinkName);
             projectLink.prepend(projectLinkIcon);
