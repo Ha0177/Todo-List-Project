@@ -50,6 +50,9 @@ class Dom {
         if (options.id) {
             element.id = options.id;
         }
+        if (options.value) {
+            element.value = options.value;
+        }
         if (options.attributes) {
             for (const [attrName, attrValue] of Object.entries(options.attributes)) {
                 element.setAttribute(attrName, attrValue);
