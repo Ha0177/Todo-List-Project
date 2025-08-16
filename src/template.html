@@ -54,6 +54,25 @@
                     <button type="button" id="project-form-cancel-btn">Cancel</button>
                 </form>
             </dialog>
+            <dialog id="add-task-dialog">
+                <form id="add-task-form">
+                <input type="text" id="task-name" placeholder="Task name" minlength="1" maxlength="500">
+                <input type="text" id="task-description" placeholder="Description" minlength="1" maxlength="1000">
+                <input type="datetime-local" id="task-due-date">
+                <select id="task-priority">
+                    <option value="4">⚪ Priority 4</option>
+                    <option value="3">🔵 Priority 3</option>
+                    <option value="2">🟡 Priority 2</option>
+                    <option value="1">🔴 Priority 1</option>
+                </select>
+                <div class="task-form-lower-area">
+                    <select id="task-project">
+                    </select>
+                    <button type="submit" id="task-form-add-btn">Add</button>
+                    <button type="button" id="task-form-cancel-btn">Cancel</button>
+                </div>
+                </form>
+            </dialog>
             
         </div>
     </nav>
