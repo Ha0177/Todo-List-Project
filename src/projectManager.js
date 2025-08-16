@@ -25,7 +25,11 @@ class ProjectManager {
     static projects = [ProjectManager.defaultProject];
 
     static addProject(projectName, color) {
-        this.projects.push(new Project(projectName, color));
+        if (ProjectManager.projects.length === 5) {
+            return;
+        } else {
+            this.projects.push(new Project(projectName, color));
+        }
     }
 
 }

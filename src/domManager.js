@@ -65,6 +65,7 @@ function initDOM() {
     renderProjects();
 
     const addTaskBtn = Dom.selectElement(".add-task-btn");
+    
     addTaskBtn.addEventListener("click", () => {
         
     });
@@ -152,10 +153,6 @@ function initDOM() {
         const name = Dom.selectElement("input#project-name");
         const colorSelect = Dom.selectElement("#project-color");
 
-        if (ProjectManager.projects.length === 5) {
-            console.log("project limit reached");
-            return;
-        }
         
         if (name.value !== "") {
             ProjectManager.addProject(name.value, colorSelect.value);
