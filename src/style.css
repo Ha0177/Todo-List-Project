@@ -3,22 +3,22 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     display: grid;
-    grid-template-areas: "sidebar main main main main main main main main main";
+    grid-template-columns: 1fr 10fr;
     height: 100dvh;
 }
 
 nav {
-    grid-area: sidebar;
-    width: 100%;
+    grid-column: 1;
     height: 100%;
 }
 
 main {
-    grid-area: main;
+    grid-column: 2;
 }
 
 div.sidebar {
@@ -65,10 +65,14 @@ div.sidebar img:not(.projects-container img):not(.project-link-icon) {
 .projects-container a.project-link {
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 10px;
     padding: 10px;
+    width: 20em;
     border-radius: 5px;
     margin-top: .5em;
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
 }
 
 .projects-container a.project-link:hover {
@@ -79,12 +83,6 @@ div.sidebar img:not(.projects-container img):not(.project-link-icon) {
 .projects-container a.project-link img {
     width: 1.6em;
     height: 1.6em;
-}
-
-a.project-link {
-    text-decoration: none;
-    color: white;
-    font-size: 1.2rem;
 }
 
 span.project-counter {
