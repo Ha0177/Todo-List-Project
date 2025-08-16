@@ -65,15 +65,62 @@ class Dom {
 
 function initDOM() {
 
-    renderProjects();
-
-    const addTaskBtn = Dom.selectElement(".add-task-btn");
     
+    // Task handler
+    
+    const addTaskBtn = Dom.selectElement(".add-task-btn");
+    const addTaskDialog = Dom.selectElement("#add-task-dialog");
+    const addTaskForm = Dom.selectElement("#add-task-form");
+    const taskFormCancelBtn = Dom.selectElement("#task-form-cancel-btn");
+    const taskFormAddBtn = Dom.selectElement("#task-form-add-btn");
+
+    // Add task form items
+    const title = Dom.selectElement("input#task-name");
+    const description = Dom.selectElement("input#task-description");
+    const date = Dom.selectElement("input#task-due-date");
+    const choosePriority = Dom.selectElement("select#task-priority");
+    const chooseProject = Dom.selectElement("select#task-project");
+
     addTaskBtn.addEventListener("click", () => {
-        
+        addTaskDialog.showModal();
+
+        chooseProject.replaceChildren();
+        ProjectManager.projects.forEach((project) => {
+            const option = Dom.createElement("option", {
+                id: "task-project-option",
+                value: project.name,
+                textContent: project.name
+            });
+            chooseProject.appendChild(option);
+        });
     });
 
+    addTaskDialog.addEventListener("click", (event) => {
+        if (event.target === addTaskDialog) {
+            addTaskForm.reset();
+            addTaskDialog.close();
+        }
+    });
+
+    taskFormCancelBtn.addEventListener("click", () => {
+        addTaskForm.reset(); 
+        addTaskDialog.close(); 
+     });
+
+    taskFormAddBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        if (title.value !== "") {
+        let task = new Task(title.value, description.value, date.value, choosePriority.value, chooseProject.value);  
+        }
+
+        addTaskForm.reset();
+        addTaskDialog.close();
+    });
+    
     //Project Handler
+    
+    renderProjects();
 
     const addProjectBtn = Dom.selectElement(".add-project-btn");
     const addProjectDialog = Dom.selectElement("#add-project-dialog")   
