@@ -10,24 +10,24 @@
         <div class="sidebar">
             <div class="logo-container">
                 <span class="item-aligner">
-                    <img src="list.svg" alt="">
+                    <img src="list.svg">
                     <h1 class="logo">ToDoList</h1>
                 </span>
             </div>
             <div class="profile-container">
                 <span class="item-aligner">
-                    <img src="user.svg" alt="">
+                    <img src="user.svg">
                     <h3 class="profile">Me</h2>
                 </span>
             </div>
             <button class="add-task-btn">
-                <img src="plus-circle.svg" alt="">Add task
+                <img src="plus-circle.svg">Add task
             </button>
             <div class="add-project-container">
                 <span class="item-aligner">
                     <h3 class="my-projects">My projects</h3><span class="project-counter"></span>
                     <button class="add-project-btn">
-                    <img src="plus-circle.svg" alt="">
+                    <img src="plus-circle.svg">
                     </button>
                 </span>
             </div>
@@ -36,7 +36,7 @@
 
             <dialog id="add-project-dialog">
                 <form id="add-project-form">
-                    <h1>Add project</h1>
+                    <h1>Add a project</h1>
                     <h2>Name</h2>
                     <input type="text" id="project-name" minlength="1" maxlength="32">
                     <h2>Color</h2>
@@ -78,7 +78,25 @@
     </nav>
 
     <main>
-        <div class="main-content"></div>
+        <div class="task-area">
+            <h1 class="task-area-project-name">My projects/Default Project</h1>
+            <div class="task-container">
+                <div class="task-item">
+                    <h1 class="task-title">Task title</h1>
+                    <p class="task-description">Task description</p>
+                    <div class="task-info-container">
+                        <div class="date-container">
+                            <img src="calendar.svg" alt="">
+                            <span class="date-display">12/32/2222/ 12:00:00</span>
+                        </div>
+                        <div class="task-project-container">
+                            <img src="Project-icons/whiteProjectIcon.svg" class="task-project-icon">
+                            <span class="project-display">Default Project</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 </html>
