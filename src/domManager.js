@@ -110,9 +110,20 @@ function initDOM() {
     taskFormAddBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
+        let task
         if (title.value !== "") {
-        let task = new Task(title.value, description.value, date.value, choosePriority.value, chooseProject.value);  
-        }
+            task = new Task(title.value, description.value, date.value, choosePriority.value, chooseProject.value);  
+        } else {
+            addTaskForm.reset(); 
+            addTaskDialog.close();
+            return; 
+        };
+        ProjectManager.projects.forEach((project) => {
+            if (task.project === project.name) {
+                project.addTask(task);
+                console.log(project);
+            }
+        });
 
         addTaskForm.reset();
         addTaskDialog.close();
