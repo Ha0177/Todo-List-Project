@@ -198,6 +198,25 @@ function initDOM() {
             projectsContainer.appendChild(projectLink);
             projectLink.prepend(projectLinkName);
             projectLink.prepend(projectLinkIcon);
+
+             if (project !== ProjectManager.defaultProject) {
+               const projectLinkDeleteBtn = Dom.createElement("button", {
+                    class: "project-link-delete-btn"
+                });
+                const projectLinkDeleteIcon = Dom.createElement("img", {
+                    class: "project-link-delete-icon",
+                    attributes: {
+                        src: deleteProjectIcon
+                    }
+                });
+                projectLinkDeleteBtn.addEventListener("click", () =>  {
+                    ProjectManager.removeProject(project.name);
+                    currentProject = ProjectManager.defaultProject;
+                    renderProjects();
+                });
+                projectLink.appendChild(projectLinkDeleteBtn);
+                projectLinkDeleteBtn.appendChild(projectLinkDeleteIcon);
+            } 
         });
     };
 
