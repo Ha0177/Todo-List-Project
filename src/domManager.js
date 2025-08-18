@@ -184,6 +184,14 @@ function initDOM() {
                 textContent: project.name,
             });
 
+            const currentProjectDisplay = Dom.selectElement(".task-area-project-name");
+            projectLink.addEventListener("click", (e) => {
+            e.preventDefault(); 
+            const selectedProject = project; 
+            currentProjectDisplay.textContent = `My projects/${selectedProject.name}`;
+        });
+            currentProjectDisplay.textContent = `My projects/${ProjectManager.defaultProject.name}`;    
+
             const projectCounter = Dom.selectElement(".project-counter")
             projectCounter.textContent = `(${ProjectManager.projects.length}/5)`;
 
