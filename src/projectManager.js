@@ -21,9 +21,9 @@ class Project {
 }
 
 class ProjectManager {
-    static defaultProject = new Project("Default Project", "white");
-    static projects = [ProjectManager.defaultProject];
-
+    static projects = [new Project("Inbox", "white")];
+    static defaultProject = ProjectManager.projects[0];
+    
     static addProject(projectName, color) {
         if (ProjectManager.projects.length === 5) {
             return;
