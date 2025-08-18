@@ -22,18 +22,25 @@ class Project {
 
 class ProjectManager {
     static projects = [new Project("Inbox", "white")];
-    static defaultProject = ProjectManager.projects[0];
+    static get defaultProject() {
+        return this.projects[0];
+    }
     
+    static removeProject(projectName) {
+        const projectIndex = this.projects.findIndex(project => project.name === projectName)
+
+        if (projectIndex !== -1) {
+            this.projects.splice(projectIndex, 1);
+        }
+    }
+
     static addProject(projectName, color) {
         if (ProjectManager.projects.length === 5) {
             return;
         } else {
             this.projects.push(new Project(projectName, color));
         }
-    }
-
+    } 
 }
-
-console.log(ProjectManager.projects)
 
 export { Project, ProjectManager };
