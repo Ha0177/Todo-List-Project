@@ -68,7 +68,7 @@ div.sidebar img:not(.projects-container img):not(.project-link-icon) {
     align-items: center;
     gap: 10px;
     padding: 10px;
-    width: 17em;
+    width: 100%;
     border-radius: 5px;
     margin-top: .5em;
     text-decoration: none;
@@ -223,20 +223,18 @@ button.delete-task-btn {
     bottom: 1.5em;
     width: 1.5em;
     height: 1.5em;
-    padding: 4px;
 
 }
 
 img.delete-task-icon {
-    width: 120%;
-    height: 120%;
+    width: 140%;
+    height: 140%;
     transition: opacity 0.25s ease;
     opacity: 0;
 }
 button.delete-task-btn:hover {
     border-radius: 5px;
     background-color: #c7c7c71e;
-
 }
 
 img.check-btn-img {
@@ -248,6 +246,27 @@ img.check-btn-img {
 button.complete-task-btn:hover img.check-btn-img {
     opacity: 1;
 }
+
+button.project-link-delete-btn {
+    margin-left: auto;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+}
+button.project-link-delete-btn:hover {
+    border-radius: 5px;
+    background-color: #c7c7c71e;
+}
+img.project-link-delete-icon {
+    width: 80%;
+    height: 80%;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    filter: invert(100%);
+}
+a.project-link:hover img.project-link-delete-icon {
+    opacity: 1;
+}
+
 .color-select {
     appearance: none;
     background: white;
