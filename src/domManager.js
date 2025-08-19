@@ -12,6 +12,7 @@ import p2Check from "./Task-icons/p2Check.svg"
 import p3Check from "./Task-icons/p3Check.svg"
 import p4Check from "./Task-icons/p4Check.svg"
 import deleteProjectIcon from "./deleteProjectIcon.svg"
+import deleteTaskIcon from "./trash.svg"
 class Dom {
     static selectElement(selector) {
         if (typeof selector === "string") {
@@ -209,10 +210,173 @@ function initDOM() {
     const choosePriority = Dom.selectElement("select#task-priority");
     const chooseProject = Dom.selectElement("select#task-project");
     
-
+    const taskArea = Dom.selectElement(".task-area");
     function renderTasks() {
+        ProjectManager.currentProject.tasks.forEach((task) => {
+            const taskContainer = Dom.createElement("div", {
+                class: "task-container"
+            })
+            taskArea.appendChild(taskContainer);
 
-        
+            const taskItem = Dom.createElement("div", {
+                class: "task-item"
+            })
+            taskContainer.appendChild(taskItem);
+
+            const taskBtnSection = Dom.createElement("div", {
+                class: "task-btn-section"
+            })
+            taskItem.appendChild(taskBtnSection);
+
+            const completeTaskBtn = Dom.createElement("button", {
+                class: "complete-task-btn"
+            })
+
+            let checkIconColor;
+            switch (task.priority) {
+                case "4":
+                    completeTaskBtn.classList.add("p4")
+                    checkIconColor = p4Check
+                    break;
+                case "3":
+                    completeTaskBtn.classList.add("p3")
+                    checkIconColor = p3Check
+                    break
+                case "2":
+                    completeTaskBtn.classList.add("p2")
+                    checkIconColor = p2Check
+                    break
+                case "1":
+                    completeTaskBtn.classList.add("p1")
+                    checkIconColor = p1Check    
+                    break
+                default:
+                    completeTaskBtn.classList.add("p4")
+                    checkIconColor = p4Check
+                    break;
+            }
+            taskBtnSection.appendChild(completeTaskBtn);
+            
+            const checkBtnImg = Dom.createElement("img", {
+                class: "check-btn-img",
+                attributes: {
+                    src: checkIconColor
+                }
+            })
+            completeTaskBtn.appendChild(checkBtnImg);
+            
+            const taskInfoSection = Dom.createElement("div", {
+                class: "task-info-section"
+            })
+            taskItem.appendChild(taskInfoSection);
+
+            const taskTitleElement = Dom.createElement("h1", {
+                class: "task-title",
+                textContent: task.title
+            })
+            taskInfoSection.appendChild(taskTitleElement);
+
+            const taskDescriptionElement = Dom.createElement("p", {
+                class: "task-description",
+                textContent: task.description 
+            })
+            if (taskDescriptionElement.textContent !== "") {
+                taskInfoSection.appendChild(taskDescriptionElement);
+            }
+
+            const taskInfoContainer = Dom.createElement("div", {
+                class: "task-info-container" 
+            })
+            if (task.dueDate) {
+            taskInfoSection.appendChild(taskInfoContainer);
+
+            const dateContainer = Dom.createElement("div", {
+                class: "date-container"
+            })
+                taskInfoContainer.appendChild(dateContainer);
+
+            const calendarImg = Dom.createElement("img", {
+                attributes: {
+                    src: dateIcon
+                }
+            })
+            dateContainer.appendChild(calendarImg);
+
+            const dateDisplay = Dom.createElement("span", {
+                class: "date-display",
+                textContent: task.dueDate
+            })
+            dateContainer.appendChild(dateDisplay);
+            }
+            
+            if (task.project.name !== "Inbox") {
+                const taskProjectContainer = Dom.createElement("div", {
+                class: "task-project-container"
+            })
+            taskInfoContainer.appendChild(taskProjectContainer);
+
+            let projectIconColor;
+            switch (task.project.color) {
+                case "white":
+                    projectIconColor = defaultProjectIcon;
+                    break;
+                case "red":
+                    projectIconColor = redProjectIcon;
+                    break;
+                case "blue":
+                    projectIconColor = blueProjectIcon;
+                    break;
+                case "green":
+                    projectIconColor = greenProjectIcon;
+                    break;
+                case "yellow":
+                    projectIconColor = yellowProjectIcon;
+                    break;
+                case "purple":
+                    projectIconColor = purpleProjectIcon;
+                    break;
+            }
+            const taskProjectIcon = Dom.createElement("img", {
+                class: "task-project-icon",
+                attributes: {
+                    src: projectIconColor
+                }
+            })
+            taskProjectContainer.appendChild(taskProjectIcon)
+
+            const taskProjectDisplay = Dom.createElement("span", {
+                class: "project-display"
+            })
+            taskProjectContainer.appendChild(taskProjectDisplay);
+            }
+            
+
+            const deleteTaskBtnSection = Dom.createElement("div", {
+                class: "task-delete-btn-section"
+            })
+            taskItem.appendChild(deleteTaskBtnSection);
+
+            const deleteTaskBtn = Dom.createElement("button", {
+                class: "delete-task-btn"
+            })
+            deleteTaskBtnSection.appendChild(deleteTaskBtn);
+
+            const deleteTaskIconElement = Dom.createElement("img", {
+                class: "delete-task-icon",
+                attributes: {
+                    src: deleteTaskIcon
+                }
+            })
+            deleteTaskBtn.appendChild(deleteTaskIconElement);
+
+            
+
+
+
+
+
+
+        });
     }
 
     addTaskBtn.addEventListener("click", () => {
@@ -255,10 +419,10 @@ function initDOM() {
         ProjectManager.projects.forEach((project) => {
             if (task.project === project.name) {
                 project.addTask(task);
-                console.log(project);
             }
         });
 
+        renderTasks();
         addTaskForm.reset();
         addTaskDialog.close();
     });
