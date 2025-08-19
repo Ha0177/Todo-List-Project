@@ -6,6 +6,12 @@ import redProjectIcon from "./Project-icons/redProjectIcon.svg"
 import yellowProjectIcon from "./Project-icons/yellowProjectIcon.svg"
 import greenProjectIcon from "./Project-icons/greenProjectIcon.svg"
 import purpleProjectIcon from "./Project-icons/purpleProjectIcon.svg"
+import dateIcon from "./calendar.svg"
+import p1Check from "./Task-icons/p1Check.svg"
+import p2Check from "./Task-icons/p2Check.svg"
+import p3Check from "./Task-icons/p3Check.svg"
+import p4Check from "./Task-icons/p4Check.svg"
+import deleteProjectIcon from "./deleteProjectIcon.svg"
 class Dom {
     static selectElement(selector) {
         if (typeof selector === "string") {
@@ -65,7 +71,129 @@ class Dom {
 
 function initDOM() {
 
+    //Project Handler
     
+    renderProjects();
+
+    const addProjectBtn = Dom.selectElement(".add-project-btn");
+    const addProjectDialog = Dom.selectElement("#add-project-dialog")   
+    const addProjectForm = Dom.selectElement("#add-project-form")
+    const projectFormCancelBtn = Dom.selectElement("#project-form-cancel-btn");
+    const projectFormAddBtn = Dom.selectElement("#project-form-add-btn");
+
+    function renderProjects() {
+        const projectsContainer = Dom.selectElement("div.projects-container")
+        projectsContainer.textContent = "";
+
+        const currentProjectDisplay = Dom.selectElement(".task-area-project-name");
+        currentProjectDisplay.textContent = `My projects/${ProjectManager.currentProject.name}`;
+        
+        ProjectManager.projects.forEach((project) => {
+            const projectLink = Dom.createElement("a", {
+                class: "project-link"
+            })
+
+            let selectedIconColor
+            switch (project.color) {
+                case "white":
+                    selectedIconColor = defaultProjectIcon;
+                     break;
+                case "red":
+                    selectedIconColor = redProjectIcon;
+                    break;
+                case "blue":
+                    selectedIconColor = blueProjectIcon;
+                    break;
+                case "green":
+                    selectedIconColor = greenProjectIcon;
+                    break;
+                case "yellow":
+                    selectedIconColor = yellowProjectIcon;
+                    break;
+                case "purple":
+                    selectedIconColor = purpleProjectIcon;
+                    break;
+                default:
+                    selectedIconColor = defaultProjectIcon;
+                    break;
+            }
+                
+            const projectLinkIcon = Dom.createElement("img", {
+                class: "project-link-icon",
+                attributes: {
+                    src: selectedIconColor
+                }
+            })
+            const projectLinkName = Dom.createElement("span", {
+                class: "project-link-name",
+                textContent: project.name,
+            });
+            
+            projectLink.addEventListener("click", (e) => {
+            e.preventDefault(); 
+            ProjectManager.currentProject = project;
+            currentProjectDisplay.textContent = `My projects/${ProjectManager.currentProject.name}`;
+        });
+
+            const projectCounter = Dom.selectElement(".project-counter")
+            projectCounter.textContent = `(${ProjectManager.projects.length}/5)`;
+
+            projectsContainer.appendChild(projectLink);
+            projectLink.prepend(projectLinkName);
+            projectLink.prepend(projectLinkIcon);
+
+             if (project !== ProjectManager.defaultProject) {
+               const projectLinkDeleteBtn = Dom.createElement("button", {
+                    class: "project-link-delete-btn"
+                });
+                const projectLinkDeleteIcon = Dom.createElement("img", {
+                    class: "project-link-delete-icon",
+                    attributes: {
+                        src: deleteProjectIcon
+                    }
+                });
+                projectLinkDeleteBtn.addEventListener("click", (e) =>  {
+                    e.stopPropagation();
+
+                    ProjectManager.removeProject(project.name);
+                    renderProjects();
+                });
+                projectLink.appendChild(projectLinkDeleteBtn);
+                projectLinkDeleteBtn.appendChild(projectLinkDeleteIcon);
+            } 
+        });
+    };
+
+    addProjectBtn.addEventListener("click", () => {
+        addProjectDialog.showModal();
+    });
+
+    addProjectDialog.addEventListener("click", (event) => {
+        if (event.target === addProjectDialog) {
+            addProjectForm.reset();
+            addProjectDialog.close();
+        }
+    });
+
+    projectFormCancelBtn.addEventListener("click", () => {
+        addProjectForm.reset(); 
+        addProjectDialog.close(); 
+     });
+
+     projectFormAddBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const name = Dom.selectElement("input#project-name");
+        const colorSelect = Dom.selectElement("#project-color");
+
+        
+        if (name.value !== "") {
+            ProjectManager.addProject(name.value, colorSelect.value);
+        }
+        addProjectForm.reset();
+        addProjectDialog.close();
+        renderProjects();
+    });
+
     // Task handler
     
     const addTaskBtn = Dom.selectElement(".add-task-btn");
@@ -74,12 +202,18 @@ function initDOM() {
     const taskFormCancelBtn = Dom.selectElement("#task-form-cancel-btn");
     const taskFormAddBtn = Dom.selectElement("#task-form-add-btn");
 
-    // Add task form items
+    // Task form items
     const title = Dom.selectElement("input#task-name");
     const description = Dom.selectElement("input#task-description");
     const date = Dom.selectElement("input#task-due-date");
     const choosePriority = Dom.selectElement("select#task-priority");
     const chooseProject = Dom.selectElement("select#task-project");
+    
+
+    function renderTasks() {
+
+        
+    }
 
     addTaskBtn.addEventListener("click", () => {
         addTaskDialog.showModal();
@@ -128,128 +262,6 @@ function initDOM() {
         addTaskForm.reset();
         addTaskDialog.close();
     });
-    
-    //Project Handler
-    
-    renderProjects();
-
-    const addProjectBtn = Dom.selectElement(".add-project-btn");
-    const addProjectDialog = Dom.selectElement("#add-project-dialog")   
-    const addProjectForm = Dom.selectElement("#add-project-form")
-    const projectFormCancelBtn = Dom.selectElement("#project-form-cancel-btn");
-    const projectFormAddBtn = Dom.selectElement("#project-form-add-btn");
-
-    function renderProjects() {
-        const projectsContainer = Dom.selectElement("div.projects-container")
-        projectsContainer.textContent = "";
-
-        ProjectManager.projects.forEach((project) => {
-            const projectLink = Dom.createElement("a", {
-                class: "project-link"
-            })
-
-            let selectedIconColor
-            switch (project.color) {
-                case "white":
-                    selectedIconColor = defaultProjectIcon;
-                     break;
-                case "red":
-                    selectedIconColor = redProjectIcon;
-                    break;
-                case "blue":
-                    selectedIconColor = blueProjectIcon;
-                    break;
-                case "green":
-                    selectedIconColor = greenProjectIcon;
-                    break;
-                case "yellow":
-                    selectedIconColor = yellowProjectIcon;
-                    break;
-                case "purple":
-                    selectedIconColor = purpleProjectIcon;
-                    break;
-                default:
-                    selectedIconColor = defaultProjectIcon;
-                    break;
-            }
-
-            const projectLinkIcon = Dom.createElement("img", {
-                class: "project-link-icon",
-                attributes: {
-                    src: selectedIconColor
-                }
-            })
-            const projectLinkName = Dom.createElement("span", {
-                class: "project-link-name",
-                textContent: project.name,
-            });
-
-            const currentProjectDisplay = Dom.selectElement(".task-area-project-name");
-            projectLink.addEventListener("click", (e) => {
-            e.preventDefault(); 
-            const selectedProject = project; 
-            currentProjectDisplay.textContent = `My projects/${selectedProject.name}`;
-        });
-            currentProjectDisplay.textContent = `My projects/${ProjectManager.defaultProject.name}`;    
-
-            const projectCounter = Dom.selectElement(".project-counter")
-            projectCounter.textContent = `(${ProjectManager.projects.length}/5)`;
-
-            projectsContainer.appendChild(projectLink);
-            projectLink.prepend(projectLinkName);
-            projectLink.prepend(projectLinkIcon);
-
-             if (project !== ProjectManager.defaultProject) {
-               const projectLinkDeleteBtn = Dom.createElement("button", {
-                    class: "project-link-delete-btn"
-                });
-                const projectLinkDeleteIcon = Dom.createElement("img", {
-                    class: "project-link-delete-icon",
-                    attributes: {
-                        src: deleteProjectIcon
-                    }
-                });
-                projectLinkDeleteBtn.addEventListener("click", () =>  {
-                    ProjectManager.removeProject(project.name);
-                    currentProject = ProjectManager.defaultProject;
-                    renderProjects();
-                });
-                projectLink.appendChild(projectLinkDeleteBtn);
-                projectLinkDeleteBtn.appendChild(projectLinkDeleteIcon);
-            } 
-        });
-    };
-
-    addProjectBtn.addEventListener("click", () => {
-        addProjectDialog.showModal();
-    });
-
-    addProjectDialog.addEventListener("click", (event) => {
-        if (event.target === addProjectDialog) {
-            addProjectForm.reset();
-            addProjectDialog.close();
-        }
-    });
-
-    projectFormCancelBtn.addEventListener("click", () => {
-        addProjectForm.reset(); 
-        addProjectDialog.close(); 
-     });
-
-     projectFormAddBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        const name = Dom.selectElement("input#project-name");
-        const colorSelect = Dom.selectElement("#project-color");
-
-        
-        if (name.value !== "") {
-            ProjectManager.addProject(name.value, colorSelect.value);
-        }
-        addProjectForm.reset();
-        addProjectDialog.close();
-        renderProjects();
-    });
-
     
 
 }
