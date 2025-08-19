@@ -21,8 +21,18 @@ class Project {
 }
 
 class ProjectManager {
-    static defaultProject = new Project("Default Project", "white");
-    static projects = [ProjectManager.defaultProject];
+    static projects = [new Project("Inbox", "white")];
+    static get defaultProject() {
+        return this.projects[0];
+    }
+    
+    static removeProject(projectName) {
+        const projectIndex = this.projects.findIndex(project => project.name === projectName)
+
+        if (projectIndex !== -1) {
+            this.projects.splice(projectIndex, 1);
+        }
+    }
 
     static addProject(projectName, color) {
         if (ProjectManager.projects.length === 5) {
@@ -30,10 +40,7 @@ class ProjectManager {
         } else {
             this.projects.push(new Project(projectName, color));
         }
-    }
-
+    } 
 }
-
-console.log(ProjectManager.projects)
 
 export { Project, ProjectManager };

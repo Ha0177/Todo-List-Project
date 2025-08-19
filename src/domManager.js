@@ -184,12 +184,39 @@ function initDOM() {
                 textContent: project.name,
             });
 
+            const currentProjectDisplay = Dom.selectElement(".task-area-project-name");
+            projectLink.addEventListener("click", (e) => {
+            e.preventDefault(); 
+            const selectedProject = project; 
+            currentProjectDisplay.textContent = `My projects/${selectedProject.name}`;
+        });
+            currentProjectDisplay.textContent = `My projects/${ProjectManager.defaultProject.name}`;    
+
             const projectCounter = Dom.selectElement(".project-counter")
             projectCounter.textContent = `(${ProjectManager.projects.length}/5)`;
 
             projectsContainer.appendChild(projectLink);
             projectLink.prepend(projectLinkName);
             projectLink.prepend(projectLinkIcon);
+
+             if (project !== ProjectManager.defaultProject) {
+               const projectLinkDeleteBtn = Dom.createElement("button", {
+                    class: "project-link-delete-btn"
+                });
+                const projectLinkDeleteIcon = Dom.createElement("img", {
+                    class: "project-link-delete-icon",
+                    attributes: {
+                        src: deleteProjectIcon
+                    }
+                });
+                projectLinkDeleteBtn.addEventListener("click", () =>  {
+                    ProjectManager.removeProject(project.name);
+                    currentProject = ProjectManager.defaultProject;
+                    renderProjects();
+                });
+                projectLink.appendChild(projectLinkDeleteBtn);
+                projectLinkDeleteBtn.appendChild(projectLinkDeleteIcon);
+            } 
         });
     };
 
