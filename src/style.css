@@ -262,6 +262,7 @@ img.project-link-delete-icon {
     transition: opacity 0.3s ease;
     opacity: 0;
     filter: invert(100%);
+    display: hidden;
 }
 a.project-link:hover img.project-link-delete-icon {
     opacity: 1;

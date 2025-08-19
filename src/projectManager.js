@@ -22,15 +22,30 @@ class Project {
 
 class ProjectManager {
     static projects = [new Project("Inbox", "white")];
+    static currentProjectValue = null;
+
     static get defaultProject() {
         return this.projects[0];
+    }
+
+    static get currentProject() {
+        return this.currentProjectValue || this.defaultProject;
+    }
+
+    static set currentProject(project) {
+        this.currentProjectValue = project;
     }
     
     static removeProject(projectName) {
         const projectIndex = this.projects.findIndex(project => project.name === projectName)
 
         if (projectIndex !== -1) {
+            const projectToRemove = this.projects[projectIndex];
             this.projects.splice(projectIndex, 1);
+
+            if (this.currentProject === projectToRemove) {
+                this.currentProject = this.defaultProject;
+            }
         }
     }
 
