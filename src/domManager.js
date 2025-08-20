@@ -134,6 +134,7 @@ function initDOM() {
             e.preventDefault(); 
             ProjectManager.currentProject = project;
             currentProjectDisplay.textContent = `My projects/${ProjectManager.currentProject.name}`;
+            renderTasks();
         });
 
             const projectCounter = Dom.selectElement(".project-counter")
@@ -212,6 +213,7 @@ function initDOM() {
     
     const taskArea = Dom.selectElement(".task-area");
     function renderTasks() {
+        taskArea.replaceChildren();
         ProjectManager.currentProject.tasks.forEach((task) => {
             const taskContainer = Dom.createElement("div", {
                 class: "task-container"
@@ -284,13 +286,14 @@ function initDOM() {
                 taskInfoSection.appendChild(taskDescriptionElement);
             }
 
-            const taskInfoContainer = Dom.createElement("div", {
+            if (task.project) {
+                const taskInfoContainer = Dom.createElement("div", {
                 class: "task-info-container" 
             })
-            if (task.dueDate) {
             taskInfoSection.appendChild(taskInfoContainer);
 
-            const dateContainer = Dom.createElement("div", {
+            if (task.dueDate) {
+                const dateContainer = Dom.createElement("div", {
                 class: "date-container"
             })
                 taskInfoContainer.appendChild(dateContainer);
@@ -306,10 +309,10 @@ function initDOM() {
                 class: "date-display",
                 textContent: task.dueDate
             })
-            dateContainer.appendChild(dateDisplay);
+            dateContainer.appendChild(dateDisplay); 
             }
             
-            if (task.project.name !== "Inbox") {
+            if (task.project !== ProjectManager.defaultProject) {
                 const taskProjectContainer = Dom.createElement("div", {
                 class: "task-project-container"
             })
@@ -345,11 +348,12 @@ function initDOM() {
             taskProjectContainer.appendChild(taskProjectIcon)
 
             const taskProjectDisplay = Dom.createElement("span", {
-                class: "project-display"
+                class: "project-display",
+                textContent: task.project.name
             })
             taskProjectContainer.appendChild(taskProjectDisplay);
             }
-            
+            }
 
             const deleteTaskBtnSection = Dom.createElement("div", {
                 class: "task-delete-btn-section"
@@ -360,6 +364,12 @@ function initDOM() {
                 class: "delete-task-btn"
             })
             deleteTaskBtnSection.appendChild(deleteTaskBtn);
+
+            deleteTaskBtn.addEventListener("click", () => {
+                const Project = task.project;
+                Project.removeTask(task.id);
+                renderTasks();
+            });
 
             const deleteTaskIconElement = Dom.createElement("img", {
                 class: "delete-task-icon",
@@ -389,6 +399,7 @@ function initDOM() {
                 value: project.name,
                 textContent: project.name
             });
+            option.project = project;
             chooseProject.appendChild(option);
         });
     });
@@ -408,19 +419,24 @@ function initDOM() {
     taskFormAddBtn.addEventListener("click", (e) => {
         e.preventDefault();
 
-        let task
-        if (title.value !== "") {
-            task = new Task(title.value, description.value, date.value, choosePriority.value, chooseProject.value);  
-        } else {
-            addTaskForm.reset(); 
+        if (title.value === "") {
+            addTaskForm.reset();
             addTaskDialog.close();
-            return; 
-        };
-        ProjectManager.projects.forEach((project) => {
-            if (task.project === project.name) {
-                project.addTask(task);
-            }
-        });
+            return;
+        }
+
+        const selectedOption = chooseProject.selectedOptions[0];
+        const selectedProject = selectedOption.project;
+
+        const task = new Task(
+        title.value,
+        description.value,
+        date.value,
+        choosePriority.value,
+        selectedProject
+        );
+
+        selectedProject.addTask(task);
 
         renderTasks();
         addTaskForm.reset();
